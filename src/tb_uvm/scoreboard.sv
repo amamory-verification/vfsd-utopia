@@ -126,10 +126,11 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(UNI_cell) fifo, uvm_phas
 
 				wrapper_cell wc;
 				wc = wrapper_cell::type_id::create("w");
+				// guardaando informacao para verificar se saiu
 				expect_cells[i].q.push_back(ncell); // Save cell in this forward queue
 				expect_cells[i].iexpect++;
 				iexpect++;
-
+				// enviando para coverage
 				wc._portn = i;
 				wc._uni_cell = tx;
 				wc._io_type = wrapper_cell::INPUT_MONITOR;

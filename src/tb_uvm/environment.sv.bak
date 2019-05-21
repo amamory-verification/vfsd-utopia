@@ -40,7 +40,7 @@ endfunction : new
 function void environment::build_phase(uvm_phase phase);
 	super.build_phase(phase);
 	_scoreboard = scoreboard::type_id::create("_scoreboard", this);
-
+	_coverage = coverage::type_id::create("_coverage", this);
 	foreach (_agent_active[i]) begin
 //    		uvm_config_db #(hermes_agent_config)::set(this, $sformatf("agent_master_%0d",i), "config", cfg.agent_cfg[i]);
 		// the following configuration sent to the agent are not supposed to be changed in the tes level, so they were separated

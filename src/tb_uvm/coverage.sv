@@ -36,24 +36,67 @@ class coverage extends uvm_subscriber #(wrapper_cell);
 	bit [1:0] srcRx;
 	bit [NumTx-1:0] fwdRx;
 	bit [1:0] srcTx;
-	bit [NumTx-1:0] fwd;
+	bit [NumTx-1:0] fwdTx;
 
-	covergroup CG_Forward;
+	covergroup CG_Backward;
 
-	coverpoint srcRx
-		{bins srcRx[] = {[0:3]};
-			option.weight = 0;}
-	coverpoint srcTx
-		{bins srcTx[] = {[0:3]};
-			option.weight = 0;}
-	coverpoint fwd
-			{bins fwd[] = {[1:15]}; // Ignore fwd==0
-			 option.weight = 0;}
-	coverpoint fwdRx
+		coverpoint srcRx
+			{bins srcRx[] = {[0:3]};
+				option.weight = 0;}
+		coverpoint fwdRx
 			{bins fwdRx[] = {[1:15]}; // Ignore fwd==0
 			 option.weight = 0;}
-      		cross srcTx, fwd;
       		cross srcRx, fwdRx;
+	endgroup: CG_Backward;
+
+	covergroup CG_Forward;
+		coverpoint srcTx
+			{bins srcTx[] = {[0:3]};
+				option.weight = 0;}
+		coverpoint fwdTx
+			{bins fwd[] = {[1:15]}; // Ignore fwd==0
+			 option.weight = 0;}
+
+      		TX_FWD_CROSS : cross srcTx, fwdTx
+		{
+			ignore_bins erroPorta = TX_FWD_CROSS with 
+								((srcTx == 3 && fwdTx>=1 && fwdTx<=7) ||
+								(srcTx == 2 && (
+								        (fwdTx>=0 && fwdTx<=3) ||
+									(fwdTx>=8 && fwdTx<=11)) ) ||
+								(srcTx == 1 && (
+								        fwdTx==1 || 
+									fwdTx==4 ||
+									fwdTx==5 ||
+									fwdTx==8 ||
+									fwdTx==9 ||
+									fwdTx==12 ||
+									fwdTx==13)) ||
+								(srcTx == 0 && 
+								        fwdTx%2==0));
+
+		}
+		ERRO_CROSS : cross srcTx, fwdTx
+		{
+			option.goal=0; // geracoes futuras, arrume aqui... Como fazer isso??
+			ignore_bins corretosPorta = ERRO_CROSS with 
+								((srcTx == 3 && fwdTx>=8 && fwdTx<=15) ||
+								(srcTx == 2 && (
+								        (fwdTx>=4 && fwdTx<=7) ||
+									(fwdTx>=12 && fwdTx<=15)) ) ||
+								(srcTx == 1 && (
+								        fwdTx==2 || 
+								        fwdTx==3 || 
+									fwdTx==6 ||
+									fwdTx==7 ||
+									fwdTx==10 ||
+									fwdTx==11 ||
+									fwdTx==14 ||
+									fwdTx==15)) ||
+								(srcTx == 0 && 
+								        fwdTx%2==1));
+
+		}
 
    	endgroup : CG_Forward
 
@@ -67,6 +110,7 @@ endclass : coverage
 function coverage::new(string name, uvm_component parent);
 		super.new(name,parent);
 		CG_Forward = new();
+		CG_Backward = new();
 endfunction : new
 
 function void coverage::write(wrapper_cell t);
@@ -75,8 +119,8 @@ function void coverage::write(wrapper_cell t);
 		CellCfgType CellCfg;
 		this.srcTx = t._portn;
 		CellCfg= top.squat.lut.read(t._nni_cell.VPI);
-		this.fwd = CellCfg.FWD;
-		t._nni_cell.display($sformatf("coverage portn: %d fwd: %b. ", t._portn, this.fwd));
+		this.fwdTx = CellCfg.FWD;
+		t._nni_cell.display($sformatf("coverage portn: %d fwd: %b. ", t._portn, this.fwdTx));
 		CG_Forward.sample();
 	end
 	if (t._io_type == wrapper_cell::INPUT_MONITOR)
@@ -88,7 +132,7 @@ function void coverage::write(wrapper_cell t);
 		this.fwdRx = CellCfg.FWD;
 		$display("fwd: %d vpi: ", CellCfg.FWD, t._uni_cell.VPI);
 		t._uni_cell.display($sformatf("coverage portn: %d fwd: %b[%d]. ", t._portn, this.fwdRx, t._uni_cell.VPI));
-		CG_Forward.sample();
+		CG_Backward.sample();
 	end
 endfunction: write 
 

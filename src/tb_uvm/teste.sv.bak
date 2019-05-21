@@ -54,9 +54,6 @@ task teste::run_phase(uvm_phase phase);
   int indice=0;
   phase.raise_objection(this);
   _cpu.run();
-$write(" finished cpu.run()!");
-	$write($time);
-$display;
   // start the virtual sequence
   foreach (_sequence._sequencer[i]) begin
     _sequence._sequencer[i] = _environment._agent_active[i]._sequencer;

@@ -25,7 +25,7 @@ vlog -work work -novopt -sv +incdir+./src/tb +incdir+./src/dut +incdir+./src/tb_
 #vlog -work work -novopt -sv +incdir+./src/dut +incdir+./src/tb_uvm ./src/tb_uvm/dut_pkg.sv 
 vlog -work work -novopt -sv +incdir+./src/tb +incdir+./src/dut +incdir+./src/tb_uvm  ./src/dut/top.sv 
 
-vsim work.top -coverage +UVM_VERBOSITY=UVM_HIGH +UVM_TESTNAME=teste
+vsim work.top -coverage +UVM_VERBOSITY=UVM_HIGH +UVM_TESTNAME=teste +UVM_PHASE_TRACE
 
 add wave -position insertpoint {sim:/top/Rx[0]/*}
 add wave -position insertpoint {sim:/top/Tx[0]/*}
@@ -35,7 +35,8 @@ add wave -position insertpoint {sim:/top/Tx[3]/*}
 add wave -position insertpoint sim:/top/mif/*
 
 set NoQuitOnFinish 1
-run 1000000ns
+run 26600ns
+#run 10ms
 
 #quit -sim
 

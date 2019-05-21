@@ -58,7 +58,6 @@ task teste::run_phase(uvm_phase phase);
   foreach (_sequence._sequencer[i]) begin
     _sequence._sequencer[i] = _environment._agent_active[i]._sequencer;
   end
-  //seq.set_seq_config(cfg);
   uvm_config_db #(int)::dump(); 
   foreach (_sequence._sequencer[i])
   begin

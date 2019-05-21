@@ -1,6 +1,6 @@
 
-`ifndef UNI_SEQUENCE__SV
-`define UNI_SEQUENCE__SV
+`ifndef REP_SEQUENCE__SV
+`define REP_SEQUENCE__SV
 
 
 import uvm_pkg::*;
@@ -24,7 +24,6 @@ class repeat_sequence extends uvm_sequence #(UNI_cell);
 			UNI_cell c;
 			c = UNI_cell::type_id::create("c");
 			start_item(c);
-//			`uvm_info("UNI_SEQUENCE", "executing body", UVM_MEDIUM);
 			$display("Creating UNI_cell %d %d", i, c.Payload);
 			assert(c.randomize());
 			finish_item(c);
@@ -53,4 +52,4 @@ class repeat_sequence extends uvm_sequence #(UNI_cell);
 
 endclass : repeat_sequence
 
-`endif //  UNI_SEQUENCE__SV
+`endif //  REP_SEQUENCE__SV
