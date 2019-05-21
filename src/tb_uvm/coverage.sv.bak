@@ -1,0 +1,95 @@
+/**********************************************************************
+ * Functional coverage code
+ *
+ * Author: Chris Spear
+ * Revision: 1.01
+ * Last modified: 8/2/2011
+ *
+ * (c) Copyright 2008-2011, Chris Spear, Greg Tumbush. *** ALL RIGHTS RESERVED ***
+ * http://chris.spear.net
+ *
+ *  This source file may be used and distributed without restriction
+ *  provided that this copyright statement is not removed from the file
+ *  and that any derivative work contains this copyright notice.
+ *
+ * Used with permission in the book, "SystemVerilog for Verification"
+ * By Chris Spear and Greg Tumbush
+ * Book copyright: 2008-2011, Springer LLC, USA, Springer.com
+ *********************************************************************/
+
+`ifndef COVERAGE__SV
+`define COVERAGE__SV
+
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+`include "definitions.sv"
+
+`include "uni_cell.sv"
+`include "nni_cell.sv"
+`include "wrapper_cell.sv"
+
+
+
+class coverage extends uvm_subscriber #(wrapper_cell);
+`uvm_component_utils(coverage);
+
+	bit [1:0] srcRx;
+	bit [NumTx-1:0] fwdRx;
+	bit [1:0] srcTx;
+	bit [NumTx-1:0] fwd;
+
+	covergroup CG_Forward;
+
+	coverpoint srcRx
+		{bins srcRx[] = {[0:3]};
+			option.weight = 0;}
+	coverpoint srcTx
+		{bins srcTx[] = {[0:3]};
+			option.weight = 0;}
+	coverpoint fwd
+			{bins fwd[] = {[1:15]}; // Ignore fwd==0
+			 option.weight = 0;}
+	coverpoint fwdRx
+			{bins fwdRx[] = {[1:15]}; // Ignore fwd==0
+			 option.weight = 0;}
+      		cross srcTx, fwd;
+      		cross srcRx, fwdRx;
+
+   	endgroup : CG_Forward
+
+     	// Instantiate the covergroup
+     	
+	extern function new(string name, uvm_component parent);
+	extern function void write(wrapper_cell t);
+
+endclass : coverage
+
+function coverage::new(string name, uvm_component parent);
+		super.new(name,parent);
+		CG_Forward = new();
+endfunction : new
+
+function void coverage::write(wrapper_cell t);
+	if (t._io_type == wrapper_cell::OUTPUT_MONITOR)
+	begin
+		CellCfgType CellCfg;
+		this.srcTx = t._portn;
+		CellCfg= top.squat.lut.read(t._nni_cell.VPI);
+		this.fwd = CellCfg.FWD;
+		t._nni_cell.display($sformatf("coverage portn: %d fwd: %b. ", t._portn, this.fwd));
+		CG_Forward.sample();
+	end
+	if (t._io_type == wrapper_cell::INPUT_MONITOR)
+	begin
+		CellCfgType CellCfg;
+		this.srcRx = t._portn;
+
+		CellCfg= top.squat.lut.read(t._uni_cell.VPI);
+		this.fwdRx = CellCfg.FWD;
+		$display("fwd: %d vpi: ", CellCfg.FWD, t._uni_cell.VPI);
+		t._uni_cell.display($sformatf("coverage portn: %d fwd: %b[%d]. ", t._portn, this.fwdRx, t._uni_cell.VPI));
+		CG_Forward.sample();
+	end
+endfunction: write 
+
+`endif // COVERAGE__SV

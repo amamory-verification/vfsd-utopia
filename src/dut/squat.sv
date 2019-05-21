@@ -108,7 +108,10 @@ module squat
     mif.DataOut <= 8'hzz;
     if (mif.BusMode == 1'b1) begin
       /*unique*/ case ({mif.Sel, mif.Rd_DS, mif.Wr_RW})
-        WriteCycle: mif.Rdy_Dtack <= 1'b0;
+
+        WriteCycle: begin
+				mif.Rdy_Dtack <= 1'b0;
+			end
         ReadCycle: begin
                      mif.Rdy_Dtack <= 1'b0;
                      mif.DataOut <= lut.read(mif.Addr);
@@ -227,8 +230,8 @@ module squat
       RoundRobin = 1;
     end: reset_logic
     else begin: FSM_sequencer
+      //$write("SquatState: %d", SquatState); $display;
       unique case (SquatState)
-
         wait_rx_valid: begin: rx_valid_state
           Rxready <= '1;
           breakVar = 1;
@@ -261,6 +264,8 @@ module squat
             // Get the forward ports & new VPI
             {forward, ATMcell.nni.VPI} <=
               lut.read(ATMcell.uni.VPI);
+	    //$write(" uni.vpi: %d read %d", ATMcell.uni.VPI, lut.read(ATMcell.uni.VPI)); $display;
+	    //$write(" forward: %d vpi: %d", forward, ATMcell.nni.VPI); $display;
             // Recompute the HEC
             ATMcell.nni.HEC <= hec(ATMcell.Mem[0:3]);
             SquatState <= wait_tx_ready;

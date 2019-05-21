@@ -83,11 +83,13 @@ interface LookupTable;
                        input dType data );
      Mem[addr] = data;
      //$display("@%0t: lut.write Mem[%0x]=%0x", $time, addr, Mem[addr]);
+//     $write("======= lut.write Mem[%0x]=%0x", addr, Mem[addr]);    $display; 
   endfunction
 
   // Function to perform read
   function dType read (input bit [Asize-1:0] addr);
-     //$display("@%0t: lut.read Mem[%0x]=%0x", $time, addr, Mem[addr]);     
+//     $display("@%0t: lut.read Mem[%0x]=%0x", $time, addr, Mem[addr]);     
+//     $write("-------------- ======= lut.read Mem[%0x]=%0x", addr, Mem[addr]);    $display; 
      return (Mem[addr]);
   endfunction
 endinterface
