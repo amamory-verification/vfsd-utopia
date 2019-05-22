@@ -24,14 +24,11 @@ class repeat_sequence extends uvm_sequence #(UNI_cell);
 			UNI_cell c;
 			c = UNI_cell::type_id::create("c");
 			start_item(c);
-			$display("Creating UNI_cell %d %d", i, c.Payload);
 			assert(c.randomize());
 			finish_item(c);
 			i++;
 		end
-		$display("--------------------> REPEAT_SEQUENCE FINISHED SUCESSFULLY!");
-		$display("--------------------> REPEAT_SEQUENCE FINISHED SUCESSFULLY!");
-		$display("--------------------> REPEAT_SEQUENCE FINISHED SUCESSFULLY!");
+		`uvm_info("repeat_sequence","----------> REPEAT_SEQUENCE FINISHED SUCESSFULLY!", UVM_LOW);
 	
 	endtask: body
 

@@ -119,16 +119,16 @@ QuestaSim-64 vlog 10.6e Compiler 2018.06 Jun 22 2018
 Top level modules:
 	--none--
 
-} {} {}} /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv {0 {vlog -work work -vopt -sv -stats=none /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv
-QuestaSim-64 vlog 10.6e Compiler 2018.06 Jun 22 2018
-** Error: /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv(27): Invalid type 'vCPU_T'. Please check the type of the variable 'mif'.
-** Error: /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv(28): Invalid type 'CellCfgType'. Please check the type of the variable 'lookup'.
-** Error: (vlog-13069) /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv(28): near "[": syntax error, unexpected '[', expecting function or task or "SystemVerilog keyword 'pure'".
-
-} {3.0 6.0} {}} /home/marcelo/vfsd-utopia/src/tb/LookupTable.sv {0 {vlog -work work -vopt -sv -stats=none /home/marcelo/vfsd-utopia/src/tb/LookupTable.sv
+} {} {}} /home/marcelo/vfsd-utopia/src/tb/LookupTable.sv {0 {vlog -work work -vopt -sv -stats=none /home/marcelo/vfsd-utopia/src/tb/LookupTable.sv
 QuestaSim-64 vlog 10.6e Compiler 2018.06 Jun 22 2018
 ** Error: /home/marcelo/vfsd-utopia/src/tb/LookupTable.sv(71): Cannot find `include file "definitions.sv" in directories:
     /home/marcelo/mentor/questasim/ovm-2.1.2/../verilog_src/ovm-2.1.2/src, /home/marcelo/mentor/questasim/uvm-1.1d/../verilog_src/uvm-1.1d/src
 -- Compiling interface LookupTable
 
-} {3.0 4.0} {}}
+} {3.0 4.0} {}} /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv {0 {vlog -work work -vopt -sv -stats=none /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv
+QuestaSim-64 vlog 10.6e Compiler 2018.06 Jun 22 2018
+** Error: /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv(27): Invalid type 'vCPU_T'. Please check the type of the variable 'mif'.
+** Error: /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv(28): Invalid type 'CellCfgType'. Please check the type of the variable 'lookup'.
+** Error: (vlog-13069) /home/marcelo/vfsd-utopia/src/tb_uvm/cpu_driver.sv(28): near "[": syntax error, unexpected '[', expecting function or task or "SystemVerilog keyword 'pure'".
+
+} {3.0 6.0} {}}

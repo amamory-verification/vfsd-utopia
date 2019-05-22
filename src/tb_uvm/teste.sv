@@ -61,7 +61,7 @@ task teste::run_phase(uvm_phase phase);
   uvm_config_db #(int)::dump(); 
   foreach (_sequence._sequencer[i])
   begin
- 	$display(" ------------------ SEQUENCER %d ------------------", indice);
+	`uvm_info("repeat_sequence",$sformatf("---------------------------------------> SEQUENCER %d",indice), UVM_LOW);
 	_sequence.start(_sequence._sequencer[i]);  
 	indice++;
   end

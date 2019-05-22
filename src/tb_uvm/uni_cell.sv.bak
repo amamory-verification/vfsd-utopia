@@ -96,9 +96,6 @@ function void UNI_cell::pack(output ATMCellType to);
    to.uni.PT      = this.PT;
    to.uni.HEC     = this.HEC;
    to.uni.Payload = this.Payload;
-//   $write("VPI: %x ", this.VPI);
-//   $write("VCI: %x ", this.VCI);$display;
-   //$write("Packed: "); foreach (to.Mem[i]) $write("%x ", to.Mem[i]); $display;
 endfunction : pack
 
 function NNI_cell UNI_cell::to_NNI();
@@ -114,17 +111,19 @@ function NNI_cell UNI_cell::to_NNI();
 endfunction : to_NNI
 
 function void UNI_cell::display(input string prefix);
-   ATMCellType p;
-
-   $display("%sUNI GFC=%x, VPI=%x, VCI=%x, CLP=%b, PT=%x, HEC=%x, Payload[0]=%x",
-	    prefix, :GFC, VPI, VCI, CLP, PT, HEC, Payload[0]);
-   this.pack(p);
-   $write("%s", prefix);
-   foreach (p.Mem[i]) $write("%x ", p.Mem[i]); $display;
-   //$write("%sUNI Payload=%x %x %x %x %x %x ...",
-   //	  prefix, Payload[0], Payload[1], Payload[2], Payload[3], Payload[4], Payload[5]);
-   //foreach(Payload[i]) $write(" %x", Payload[i]);
-   $display;
+	ATMCellType p;
+	string text;
+	`uvm_info("UNI_CELL",$sformatf("%x, VPI=%d, VCI=%x, CLP=%b, PT=%x, HEC=%x, Payload[0]=%x",
+	    prefix, GFC, VPI, VCI, CLP, PT, HEC, Payload[0]), UVM_HIGH);
+//   $display("%sUNI GFC=%x, VPI=%d, VCI=%x, CLP=%b, PT=%x, HEC=%x, Payload[0]=%x",
+//	    prefix, GFC, VPI, VCI, CLP, PT, HEC, Payload[0]);
+	this.pack(p);
+	text = prefix;
+        foreach (p.Mem[i]) text={text,$sformatf("%x ", p.Mem[i])}; 
+	`uvm_info("UNI_CELL",text,UVM_HIGH);
+   //$write("%s", prefix);
+//   foreach (p.Mem[i]) $write("%x ", p.Mem[i]); $display;
+//   $display;
 endfunction : display
 
 `endif // UNI_CELL__SV

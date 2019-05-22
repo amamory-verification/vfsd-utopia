@@ -38,7 +38,6 @@ endclass : monitor
 
 function monitor::new(string name="monitor", uvm_component parent);
 	super.new(name, parent);
-	$write("---> monitor::new!");$display;
 	is_active=MON_ACTIVE;
 endfunction : new
 
@@ -46,9 +45,6 @@ function void monitor::build_phase(uvm_phase phase);
 	bit active_type;
 	super.build_phase(phase);
 
-
-
-	$write("---> monitor::build_phase!");$display;
 	if (!uvm_config_db #(virtual Utopia)::get (this,"", "utopia_if", utopia_if) )
 	begin
 		uvm_config_db #(int)::dump(); 
@@ -62,11 +58,11 @@ function void monitor::build_phase(uvm_phase phase);
 		uvm_config_db #(int)::dump(); 
 		`uvm_fatal("monitor", "No active/passive configuration");
 	end
+
 	if (active_type)
 	begin
 		is_active = MON_ACTIVE;
 		uni_collected_port = new("monitor_port", this); 
-		$write("MONITOR IS ACTIVE!");
 	end
 	else
 	begin
@@ -77,7 +73,6 @@ function void monitor::build_phase(uvm_phase phase);
 			uvm_config_db #(int)::dump(); 
 			`uvm_fatal("monitor", "No portn configuration");
 		end
-		$write("MONITOR IS PASSIVE!");
 	end
 endfunction : build_phase
 
@@ -99,9 +94,7 @@ endfunction : connect_phase
 // run phase
 task monitor::run_phase(uvm_phase phase);
 	// popular trans_colleted com os valores da interface
-	$write("---> monitor::run_phase!");$display;
-	$write("---> monitor::run_phase!");$display;
-	$write("---> monitor::run_phase!");$display;
+
 	// INPUT: ready, reset, soc, clav, clk_in, data
 	//OUTPUT: valid, en, ATMCell, clk_out
 
@@ -162,8 +155,6 @@ task monitor::run_active(uvm_phase phase);
 					begin : vci_clp_state
 						if (utopia_if.clav)
 						begin
-							//$write("utopia_if: ",utopia_if);
-							//$write("uni_trans_collected: ",uni_trans_collected);
 							{uni_trans_collected.VCI[3:0], uni_trans_collected.CLP, uni_trans_collected.PT} <= utopia_if.data;
 							_utopiaStatus <= hec;
 						end
@@ -194,10 +185,8 @@ task monitor::run_active(uvm_phase phase);
 						begin
 							ATMCellType Pkt;
 							uni_collected_port.write(uni_trans_collected);
-							//$write(" monitor %d collected uni transaction: ",portn, uni_trans_collected);$display;
 
 							uni_trans_collected.pack(Pkt);
-							//$write("monitor %d collected UNI_cell: ", portn); foreach (Pkt.Mem[i]) $write("%x ", Pkt.Mem[i]); $display;
 							_utopiaStatus <= reset;					
 						end
 					end: ack_state
@@ -234,6 +223,7 @@ task monitor::run_passive(uvm_phase phase);
 				Pkt.Mem[i] = utopia_if.cbt.data;
 				@(utopia_if.cbt);
 			end
+			if (utopia_if.reset===1'b1) continue;
 
 			utopia_if.cbt.clav <= 0;
 

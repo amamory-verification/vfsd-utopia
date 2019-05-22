@@ -50,8 +50,8 @@ function void agent::build_phase(uvm_phase phase);
 	begin
 		int portn;
 		uvm_config_db #(bit)::set (this,"monitor", "is_active", 0);
+		uvm_config_db #(int)::dump(); 
 		uvm_config_db #(int)::get (this,"", "portn", portn);
-		$write("portn %d",portn);$display;
 		uvm_config_db #(int)::set (this,"monitor", "portn", portn);
 
 	end

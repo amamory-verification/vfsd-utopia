@@ -82,15 +82,15 @@ function void NNI_cell::pack(output ATMCellType to);
 endfunction : pack
 
 function void NNI_cell::display(input string prefix);
-   ATMCellType p;
+	ATMCellType p;
+	string text;
+	`uvm_info("NNI_CELL",$sformatf("%sNNI  VPI=%x, VCI=%x, CLP=%b, PT=%x, HEC=%x, Payload[0]=%x",
+	    prefix, VPI, VCI, CLP, PT, HEC, Payload[0]), UVM_HIGH);
 
-   $display("%sNNI  VPI=%x, VCI=%x, CLP=%b, PT=%x, HEC=%x, Payload[0]=%x",
-	    prefix, VPI, VCI, CLP, PT, HEC, Payload[0]);
-   this.pack(p);
-   $write("%s", prefix);
-   foreach (p.Mem[i]) $write("%x ", p.Mem[i]); $display;
-   //$write("%sUNI Payload=%x %x %x %x %x %x ...",
-   $display;
+	this.pack(p);
+	text = prefix;
+        foreach (p.Mem[i]) text={text,$sformatf("%x ", p.Mem[i])}; 
+	`uvm_info("UNI_CELL",text,UVM_HIGH);
 endfunction : display
 
 `endif // NNI_CELL__SV

@@ -114,7 +114,7 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(UNI_cell) fifo, uvm_phas
 		fifo.get(tx);
 
 		tx.pack(Pkt);
-		phase.raise_objection(this);
+//		phase.raise_objection(this);
 		ncell = tx.to_NNI;
 		CellCfg = top.squat.lut.read(tx.VPI);
 		tx.display($sformatf("scoreboard received packet(FWD: %b)VPI %d: ",CellCfg.FWD, tx.VPI));
@@ -142,7 +142,7 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(UNI_cell) fifo, uvm_phas
 //				$write("\n############[%d]: %d ", i, expect_cells[i].iexpect);
 			end
 //		$display;	
-  		$display("@%0t: %m so far %0d expected cells, %0d actual cells received. Errors: %0d", $time, iexpect, iactual, nErrors);
+//  		$display("@%0t: %m so far %0d expected cells, %0d actual cells received. Errors: %0d", $time, iexpect, iactual, nErrors);
 	end
 endtask: get_input_data
 
@@ -190,7 +190,7 @@ task scoreboard::get_output_data(uvm_tlm_analysis_fifo #(NNI_cell) fifo, int por
 				found=1;
 			end
 		end
-  		$display("@%0t: %m so far %0d expected cells, %0d actual cells received. Errors: %0d", $time, iexpect, iactual, nErrors);
+//  		$display("@%0t: %m so far %0d expected cells, %0d actual cells received. Errors: %0d", $time, iexpect, iactual, nErrors);
 		if (found)
 			continue;
 		$write("@%0t: ERROR: %m cell not found. portn: %d", $time, portn);
@@ -198,7 +198,7 @@ task scoreboard::get_output_data(uvm_tlm_analysis_fifo #(NNI_cell) fifo, int por
 		nErrors++;
 		error_cells.push_back(tx);
 		// drop one objection to indicate that a packet was received. one step closer to terminate the simulation 
-		phase.drop_objection(this);
+//		phase.drop_objection(this);
 	end
 	// write
 endtask : get_output_data
@@ -209,12 +209,12 @@ endfunction : write
 
 function void scoreboard::extract_phase( uvm_phase phase );
 super.extract_phase(phase);
-   $display("@%0t: %m %0d expected cells, %0d actual cells received", $time, iexpect, iactual);
+   `uvm_info("scoreboard extract_phase",$sformatf("@%0t: %m %0d expected cells, %0d actual cells received", $time, iexpect, iactual),UVM_LOW);
 
    // Look for leftover cells
    foreach (expect_cells[i]) begin
       if (expect_cells[i].q.size()) begin
-	 $display("@%0t: %m cells remaining in Tx[%0d] scoreboard at end of test", $time, i);
+	 `uvm_info("scoreboard extract_phase",$sformatf("@%0t: %m cells remaining in Tx[%0d] scoreboard at end of test", $time, i),UVM_HIGH);
 	 this.display("Unclaimed: ");
 	 nErrors++;
       end
@@ -222,13 +222,14 @@ super.extract_phase(phase);
 endfunction : extract_phase
 
 function void scoreboard::display(string prefix);
-	$display("@%0t: %m so far %0d expected cells, %0d actual cells received", $time, iexpect, iactual);
+	`uvm_info("scoreboard",$sformatf("@%0t: %m so far %0d expected cells, %0d actual cells received", $time, iexpect, iactual),UVM_HIGH);
+
 	foreach (expect_cells[i]) begin
-		$display("Tx[%0d]: exp=%0d, act=%0d", i, expect_cells[i].iexpect, expect_cells[i].iactual);
+		`uvm_info("scoreboard",$sformatf("Tx[%0d]: exp=%0d, act=%0d", i, expect_cells[i].iexpect, expect_cells[i].iactual),UVM_HIGH);
 		foreach (expect_cells[i].q[j])
 			expect_cells[i].q[j].display($sformatf("%sScoreboard: Tx%0d: ", prefix, i));
 	end
-	$display("---- ERROR CELLS!");
+	`uvm_info("scoreboard","---- ERROR CELL!",UVM_HIGH);
 	foreach(error_cells[i])
 		error_cells[i].display(" ERROR CELL: ");
 endfunction : display

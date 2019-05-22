@@ -78,7 +78,7 @@ class coverage extends uvm_subscriber #(wrapper_cell);
 		}
 		ERRO_CROSS : cross srcTx, fwdTx
 		{
-			option.goal=0; // geracoes futuras, arrume aqui... Como fazer isso??
+//			option.goal=0; // geracoes futuras, arrume aqui... Como fazer isso??
 			ignore_bins corretosPorta = ERRO_CROSS with 
 								((srcTx == 3 && fwdTx>=8 && fwdTx<=15) ||
 								(srcTx == 2 && (
@@ -109,8 +109,12 @@ endclass : coverage
 
 function coverage::new(string name, uvm_component parent);
 		super.new(name,parent);
+//		CG_Forward::ERRO_CROSS::type_option.goal=5;
+//		CG_Forward::ERRO_CROSS::type_option.weight=2;
 		CG_Forward = new();
 		CG_Backward = new();
+//		CG_Forward.ERRO_CROSS.option.goal = 20;
+//		CG_Forward.ERRO_CROSS.option.weight = 10;
 endfunction : new
 
 function void coverage::write(wrapper_cell t);
@@ -130,7 +134,7 @@ function void coverage::write(wrapper_cell t);
 
 		CellCfg= top.squat.lut.read(t._uni_cell.VPI);
 		this.fwdRx = CellCfg.FWD;
-		$display("fwd: %d vpi: ", CellCfg.FWD, t._uni_cell.VPI);
+//		$display("fwd: %d vpi: ", CellCfg.FWD, t._uni_cell.VPI);
 		t._uni_cell.display($sformatf("coverage portn: %d fwd: %b[%d]. ", t._portn, this.fwdRx, t._uni_cell.VPI));
 		CG_Backward.sample();
 	end
