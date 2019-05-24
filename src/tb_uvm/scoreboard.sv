@@ -97,6 +97,7 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm_
 	forever begin
 		int portn;
 		NNI_cell ncell;
+		phase.raise_objection(this);
 		fifo.get(tx);
 
 		tx._uni_cell.pack(Pkt);
@@ -113,6 +114,7 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm_
 				iexpect++;
      			end
 		cov_ap.write(tx);
+		phase.drop_objection(this);
 	end
 endtask: get_input_data
 
@@ -124,6 +126,7 @@ task scoreboard::get_output_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm
 	int portn;
 	forever begin
 		bit found = 0;
+		phase.raise_objection(this);
 		fifo.get(tx);
 		portn = tx._portTx;
 
@@ -149,12 +152,14 @@ task scoreboard::get_output_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm
 		cov_ap.write(tx);
 
 		if (found)
+			phase.drop_objection(this);
 			continue;
 		`uvm_info("scoreboard", $sformatf("@%0t: ERROR: %m cell not found. portn: %d", $time, portn), UVM_HIGH);
 		tx._nni_cell.display("scoreboard: ");
 
 		nErrors++;
 		error_cells.push_back(tx._nni_cell);
+		phase.drop_objection(this);
 	end
 	// write
 endtask : get_output_data
@@ -165,6 +170,8 @@ endfunction : write
 
 function void scoreboard::extract_phase( uvm_phase phase );
 super.extract_phase(phase);
+   `uvm_info("scoreboard extract_phase","----------------------------------------------------------------------------------------",UVM_LOW);
+   `uvm_info("scoreboard extract_phase","---------------------------------------------------------------- EXTRACT FROM SCOREBOARD",UVM_LOW);
    `uvm_info("scoreboard extract_phase",$sformatf("@%0t: %m %0d expected cells, %0d actual cells received", $time, iexpect, iactual),UVM_LOW);
 
    // Look for leftover cells
@@ -175,6 +182,7 @@ super.extract_phase(phase);
 	 nErrors++;
       end
    end
+   `uvm_info("scoreboard extract_phase","----------------------------------------------------------------------------------------",UVM_LOW);
 endfunction : extract_phase
 
 function void scoreboard::display(string prefix);
