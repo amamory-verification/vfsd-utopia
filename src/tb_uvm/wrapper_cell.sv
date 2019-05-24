@@ -16,12 +16,14 @@ class wrapper_cell extends uvm_sequence_item;
 	NNI_cell _nni_cell;
 	typedef enum bit { INPUT_MONITOR=0, OUTPUT_MONITOR=1 } monitor_io_type_enum;
 	monitor_io_type_enum _io_type;
-	int _portn;
+	int _portRx;
+	int _portTx;
 
 	function new(string name ="");
 		super.new(name);
 		this._io_type = INPUT_MONITOR;
-		this._portn=-1;
+		this._portRx=-1;
+		this._portTx=-1;
 	endfunction
 
 endclass : wrapper_cell

@@ -42,6 +42,8 @@ function void environment::build_phase(uvm_phase phase);
 	_scoreboard = scoreboard::type_id::create("_scoreboard", this);
 	_coverage = coverage::type_id::create("_coverage", this);
 	foreach (_agent_active[i]) begin
+		uvm_config_int::set(this, $sformatf("agent_active_%0d",i), "is_active", UVM_ACTIVE);
+		uvm_config_db #(int)::set (this,$sformatf("agent_active_%0d",i), "portn", i);
 		_agent_active[i] = agent::type_id::create($sformatf("agent_active_%0d",i), this);
 	end
 	foreach (_agent_passive[i]) begin

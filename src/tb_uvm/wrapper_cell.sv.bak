@@ -10,12 +10,15 @@ import uvm_pkg::*;
 `include "nni_cell.sv"
 
 class wrapper_cell extends uvm_sequence_item;
+`uvm_object_utils(wrapper_cell);
 
 	UNI_cell _uni_cell;
 	NNI_cell _nni_cell;
 	typedef enum bit { INPUT_MONITOR=0, OUTPUT_MONITOR=1 } monitor_io_type_enum;
 	monitor_io_type_enum _io_type;
-	int _portn;
+	int _portRx;
+	int _portTx;
+//	int _portn;
 
 	function new(string name ="");
 		super.new(name);

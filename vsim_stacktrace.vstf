@@ -510,3 +510,69 @@
 # End of Stack Trace
 
 
+# Current time Fri May 24 13:33:13 2019
+# Program = vsim
+# Id = "10.6e"
+# Version = "2018.06"
+# Date = "Jun 22 2018"
+# Platform = "linux_x86_64"
+# Signature = 166f2d6b4af5e2b1b427a146b556ed47
+# 0    0x0000000000e1d34c: '<unknown (@0xe1d34c)>'
+# 1    0x00007feff284d166: './src/tb_uvm/monitor.sv:188'
+# 2    0x00007feff284bd4c: './src/tb_uvm/monitor.sv:103'
+# 3    0x00007feff23874d9: '/home/marcelo/mentor/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_common_phases.svh:245'
+# 4    0x00007feff2384697: '/home/marcelo/mentor/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_task_phase.svh:150'
+# 5    0x0000000000e76e72: '<unknown (@0xe76e72)>'
+# 6    0x00000000005c83be: '<unknown (@0x5c83be)>'
+# 7    0x000000000049240c: '<unknown (@0x49240c)>'
+# 8    0x00000000005fd865: '<unknown (@0x5fd865)>'
+# 9    0x0000000000a5156b: '<unknown (@0xa5156b)>'
+# 10   0x0000000000a55641: '<unknown (@0xa55641)>'
+# 11   0x0000000000a56dbe: '<unknown (@0xa56dbe)>'
+# 12   0x00000000011bb02d: '<unknown (@0x11bb02d)>'
+# 13   0x00000000011bf486: '<unknown (@0x11bf486)>'
+# 14   0x00000000011c0b71: '<unknown (@0x11c0b71)>'
+# 15   0x00000000011c0ed6: '<unknown (@0x11c0ed6)>'
+# 16   0x0000000000e5f56b: '<unknown (@0xe5f56b)>'
+# 17   0x0000000001260ddf: '<unknown (@0x1260ddf)>'
+# 18   0x00000000012b4947: '<unknown (@0x12b4947)>'
+# 19   0x0000000001277847: '<unknown (@0x1277847)>'
+# 20   0x0000000001277b29: '<unknown (@0x1277b29)>'
+# 21   0x00000000010d0be6: '<unknown (@0x10d0be6)>'
+# 22   0x0000000000a2d7f6: '<unknown (@0xa2d7f6)>'
+# End of Stack Trace
+
+
+# Current time Fri May 24 13:34:17 2019
+# Program = vsim
+# Id = "10.6e"
+# Version = "2018.06"
+# Date = "Jun 22 2018"
+# Platform = "linux_x86_64"
+# Signature = 166f2d6b4af5e2b1b427a146b556ed47
+# 0    0x0000000000e1d34c: '<unknown (@0xe1d34c)>'
+# 1    0x00007feff24b570e: './src/tb_uvm/monitor.sv:236'
+# 2    0x00007feff24b2b79: './src/tb_uvm/monitor.sv:107'
+# 3    0x00007feff1fc7909: '/home/marcelo/mentor/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_common_phases.svh:245'
+# 4    0x00007feff1fc4ac7: '/home/marcelo/mentor/questasim/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_task_phase.svh:150'
+# 5    0x0000000000e76e72: '<unknown (@0xe76e72)>'
+# 6    0x00000000005c83be: '<unknown (@0x5c83be)>'
+# 7    0x000000000049240c: '<unknown (@0x49240c)>'
+# 8    0x00000000005fd865: '<unknown (@0x5fd865)>'
+# 9    0x0000000000a5156b: '<unknown (@0xa5156b)>'
+# 10   0x0000000000a55641: '<unknown (@0xa55641)>'
+# 11   0x0000000000a56dbe: '<unknown (@0xa56dbe)>'
+# 12   0x00000000011bb02d: '<unknown (@0x11bb02d)>'
+# 13   0x00000000011bf486: '<unknown (@0x11bf486)>'
+# 14   0x00000000011c0b71: '<unknown (@0x11c0b71)>'
+# 15   0x00000000011c0ed6: '<unknown (@0x11c0ed6)>'
+# 16   0x0000000000e5f56b: '<unknown (@0xe5f56b)>'
+# 17   0x0000000001260ddf: '<unknown (@0x1260ddf)>'
+# 18   0x00000000012b4947: '<unknown (@0x12b4947)>'
+# 19   0x0000000001277847: '<unknown (@0x1277847)>'
+# 20   0x0000000001277b29: '<unknown (@0x1277b29)>'
+# 21   0x00000000010d0be6: '<unknown (@0x10d0be6)>'
+# 22   0x0000000000a2d7f6: '<unknown (@0xa2d7f6)>'
+# End of Stack Trace
+
+

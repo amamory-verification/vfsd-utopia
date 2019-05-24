@@ -33,6 +33,7 @@ endfunction : new
 // build_phase
 function void agent::build_phase(uvm_phase phase);
 	virtual Utopia utopia_if;
+	int portn;
 	super.build_phase(phase);
 	if (!uvm_config_db #(virtual Utopia)::get (this, "", "utopia_if", utopia_if) )
 	begin
@@ -48,12 +49,10 @@ function void agent::build_phase(uvm_phase phase);
 	end
 	else
 	begin
-		int portn;
 		uvm_config_db #(bit)::set (this,"monitor", "is_active", 0);
-		uvm_config_db #(int)::get (this,"", "portn", portn);
-		uvm_config_db #(int)::set (this,"monitor", "portn", portn);
-
 	end
+	uvm_config_db #(int)::get (this,"", "portn", portn);
+	uvm_config_db #(int)::set (this,"monitor", "portn", portn);
 	_monitor = monitor::type_id::create("monitor", this);
 
 endfunction : build_phase
