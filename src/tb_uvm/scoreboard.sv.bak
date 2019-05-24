@@ -97,6 +97,7 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm_
 	forever begin
 		int portn;
 		NNI_cell ncell;
+		phase.raise_objection(this);
 		fifo.get(tx);
 
 		tx._uni_cell.pack(Pkt);

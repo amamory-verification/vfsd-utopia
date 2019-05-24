@@ -3,6 +3,8 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 `include "squat.sv"
+`include "teste.sv"
+`include "teste_parallel.sv"
 
 
 //import dut_pkg::*;

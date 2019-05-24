@@ -1,7 +1,7 @@
 
 
-`ifndef TEST__SV
-`define TEST__SV
+
+
 
 import uvm_pkg::*;
 `include "uvm_macros.svh"
@@ -61,12 +61,12 @@ task teste::run_phase(uvm_phase phase);
   uvm_config_db #(int)::dump(); 
   foreach (_sequence._sequencer[i])
   begin
-	`uvm_info("repeat_sequence",$sformatf("--------------------> SEQUENCER %d",indice), UVM_LOW);
+	`uvm_info("repeat_sequence",$sformatf("---------------------------------------> SEQUENCER %d",indice), UVM_LOW);
 	_sequence.start(_sequence._sequencer[i]);  
 	indice++;
   end
   phase.drop_objection(this);
 endtask : run_phase
 
-`endif // UNI_SEQUENCE__SV
+
 

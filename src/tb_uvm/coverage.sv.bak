@@ -124,7 +124,7 @@ function void coverage::write(wrapper_cell t);
 		this.portTx = t._portTx;
 		CellCfg= top.squat.lut.read(t._nni_cell.VPI);
 		this.fwdTx = CellCfg.FWD;
-		t._nni_cell.display($sformatf("coverage portn: %d fwd: %b. ", t._portn, this.fwdTx));
+		t._nni_cell.display($sformatf("coverage portn: %d fwd: %b. ", t._portTx, this.fwdTx));
 		CG_Forward.sample();
 	end
 	if (t._io_type == wrapper_cell::INPUT_MONITOR)
@@ -135,7 +135,7 @@ function void coverage::write(wrapper_cell t);
 		CellCfg= top.squat.lut.read(t._uni_cell.VPI);
 		this.fwdRx = CellCfg.FWD;
 //		$display("fwd: %d vpi: ", CellCfg.FWD, t._uni_cell.VPI);
-		t._uni_cell.display($sformatf("coverage portn: %d fwd: %b[%d]. ", t._portn, this.fwdRx, t._uni_cell.VPI));
+		t._uni_cell.display($sformatf("coverage portn: %d fwd: %b[%d]. ", t._portRx, this.fwdRx, t._uni_cell.VPI));
 		CG_Backward.sample();
 	end
 endfunction: write 

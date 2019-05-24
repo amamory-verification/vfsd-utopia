@@ -108,7 +108,7 @@ task scoreboard::get_input_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm_
 
 		for (int i=0; i<`RxPorts; i++)
 			if (CellCfg.FWD[i]) begin
-				// guardaando informacao para verificar se saiu no TX
+				// guardando informacao para verificar se saiu no TX
 				expect_cells[i].q.push_back(ncell); // Save cell in this forward queue
 				expect_cells[i].iexpect++;
 				iexpect++;
