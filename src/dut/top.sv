@@ -61,7 +61,6 @@ module top;
 
 	initial begin
 		run_test();
-		$write("test finished!");
  	end
 
 endmodule : top

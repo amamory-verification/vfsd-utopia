@@ -134,7 +134,7 @@ function void coverage::write(wrapper_cell t);
 
 		CellCfg= top.squat.lut.read(t._uni_cell.VPI);
 		this.fwdRx = CellCfg.FWD;
-//		$display("fwd: %d vpi: ", CellCfg.FWD, t._uni_cell.VPI);
+
 		t._uni_cell.display($sformatf("coverage portn: %d fwd: %b[%d]. ", t._portRx, this.fwdRx, t._uni_cell.VPI));
 		CG_Backward.sample();
 	end

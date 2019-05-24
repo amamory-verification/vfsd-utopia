@@ -132,8 +132,8 @@ task scoreboard::get_output_data(uvm_tlm_analysis_fifo #(wrapper_cell) fifo, uvm
 
 
 		if (expect_cells[portn].q.size() == 0) begin
-			$display("@%0t: ************ ERROR: %m cell not found because scoreboard for TX%0d empty", $time, portn);
-//			tx.display("Not Found: ");
+			`uvm_info("scoreboard",$sformatf("@%0t: ************ ERROR: %m cell not found because scoreboard for TX%0d empty", $time, portn), UVM_LOW);
+
 			nErrors++;
 			continue;
 		end

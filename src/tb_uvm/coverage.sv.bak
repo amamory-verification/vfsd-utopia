@@ -76,7 +76,7 @@ class coverage extends uvm_subscriber #(wrapper_cell);
 								        fwdTx%2==0));
 
 		}
-		ERRO_CROSS : cross portTx, fwdTx
+/*		ERRO_CROSS : cross portTx, fwdTx
 		{
 //			option.goal=0; // geracoes futuras, arrume aqui... Como fazer isso??
 			ignore_bins corretosPorta = ERRO_CROSS with 
@@ -96,7 +96,7 @@ class coverage extends uvm_subscriber #(wrapper_cell);
 								(portTx == 0 && 
 								        fwdTx%2==1));
 
-		}
+		}//*/
 
    	endgroup : CG_Forward
 
