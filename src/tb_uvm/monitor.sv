@@ -20,9 +20,8 @@ class monitor extends uvm_monitor;
 	UNI_cell uni_trans_collected;
 	uvm_analysis_port #(wrapper_cell) nni_collected_port;
 	NNI_cell nni_trans_collected;
-
-	typedef enum bit { MON_PASSIVE=0, MON_ACTIVE=1 } active_passive_enum;
-	active_passive_enum is_active;	
+	
+	uvm_active_passive_enum is_active;
 	int portn;
 
 	extern function new(string name="monitor", uvm_component parent);
@@ -38,7 +37,7 @@ endclass : monitor
 
 function monitor::new(string name="monitor", uvm_component parent);
 	super.new(name, parent);
-	is_active=MON_ACTIVE;
+	is_active=UVM_ACTIVE;
 endfunction : new
 
 function void monitor::build_phase(uvm_phase phase);
@@ -61,12 +60,12 @@ function void monitor::build_phase(uvm_phase phase);
 
 	if (active_type)
 	begin
-		is_active = MON_ACTIVE;
+		is_active = UVM_ACTIVE;
 		uni_collected_port = new("monitor_port", this); 
 	end
 	else
 	begin
-		is_active = MON_PASSIVE;
+		is_active = UVM_PASSIVE;
 		nni_collected_port = new("monitor_port", this); 
 	end
 	if (!uvm_config_db #(int)::get (this,"", "portn", portn) )
@@ -77,13 +76,13 @@ function void monitor::build_phase(uvm_phase phase);
 endfunction : build_phase
 
 function void monitor::connect_phase(uvm_phase phase);
-	if (is_active == MON_ACTIVE)
+	if (is_active == UVM_ACTIVE)
 	begin
 		uvm_analysis_port # (wrapper_cell) in_mon_ap; 
 		uvm_config_db #(uvm_analysis_port #(wrapper_cell) )::get(null, "uvm_test_top.env._scoreboard", "in_mon_ap", in_mon_ap);
 		uni_collected_port.connect(in_mon_ap);
 	end
-	else //MON_PASSIVE
+	else //UVM_PASSIVE
 	begin
 		uvm_analysis_port # (wrapper_cell) out_mon_ap; 
 		uvm_config_db #(uvm_analysis_port #(wrapper_cell) )::get(null, "uvm_test_top.env._scoreboard", "out_mon_ap", out_mon_ap);
@@ -98,11 +97,11 @@ task monitor::run_phase(uvm_phase phase);
 	// INPUT: ready, reset, soc, clav, clk_in, data
 	//OUTPUT: valid, en, ATMCell, clk_out
 
-	if (is_active==MON_ACTIVE)
+	if (is_active==UVM_ACTIVE)
 	begin
 		this.run_active(phase);		
 	end
-	if (is_active==MON_PASSIVE)
+	if (is_active==UVM_PASSIVE)
 	begin
 		this.run_passive(phase);		
 	end
