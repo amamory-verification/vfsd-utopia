@@ -3,6 +3,7 @@ vmap work work
 
 
 
+vlog -work work -novopt -sv +incdir+./src/tb +incdir+./src/dut +incdir+./src/tb_uvm  ./src/tb_uvm/utopia.sv
 vlog -work work -novopt -sv +incdir+./src/tb +incdir+./src/dut +incdir+./src/tb_uvm  ./src/dut/utopia1_atm_rx.sv 
 vlog -work work -novopt -sv +incdir+./src/tb +incdir+./src/dut +incdir+./src/tb_uvm  ./src/dut/utopia1_atm_tx.sv  
 vlog -work work -novopt -sv +incdir+./src/tb +incdir+./src/dut +incdir+./src/tb_uvm  ./src/tb/LookupTable.sv 

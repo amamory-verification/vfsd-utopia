@@ -1,2 +1,14 @@
 work/*
-
+dump.vcd
+modelsim.ini
+teste.ucdb
+teste_parallel.ucdb
+transcript
+utopia.ucdb
+uvm.mpf
+uvm.cr.mti
+vsim.wlf
+vsim_stacktrace.vstf
+src/hs_err_pid*.log
+src/transcript
+work/_info
