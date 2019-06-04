@@ -20,6 +20,7 @@ class agent extends uvm_agent;
 	extern function new (string name, uvm_component parent);
 	extern function void build_phase(uvm_phase phase);
 	extern function void connect_phase(uvm_phase phase);
+	extern function void end_of_elaboration();
 
 endclass : agent
 
@@ -62,6 +63,27 @@ function void agent::connect_phase(uvm_phase phase);
 		_driver.seq_item_port.connect(_sequencer.seq_item_export);
 	end
 endfunction : connect_phase
+
+//---------------------------------------  
+// End of elaboration phase - debbuging connection
+//---------------------------------------
+// http://www.learnuvmverification.com/index.php/2016/05/22/debugging-uvm-environment/
+// This can be controlled by the flag +UVM_VERBOSITY = LOW/HIGH at simulation command
+function void agent::end_of_elaboration();
+
+   //DEBUG connection
+   if ( get_is_active() ) begin
+
+      _driver.seq_item_port.debug_connected_to();
+      _monitor.uni_collected_port.debug_connected_to();
+      
+   end else begin
+      
+      _monitor.nni_collected_port.debug_connected_to();
+
+   end
+
+endfunction
 
 
 
