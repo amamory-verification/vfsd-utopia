@@ -4,10 +4,10 @@ This project is adapted from the one in the book "SystemVerilog for Verification
 ---
 ## Run
 
-#### SystemVerilog
+#### SystemVerilog:
 
   ./run.sh sv
 
-#### UVM
+#### UVM:
 
   ./run.sh uvm
