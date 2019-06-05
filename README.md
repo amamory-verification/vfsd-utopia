@@ -4,6 +4,10 @@ This project is adapted from the one in the book "SystemVerilog for Verification
 ---
 ## Run
 
-On terminal: vsim -c -do scripts/1_compile.do
+#### SystemVerilog
 
-On QuestaSim/Modelsim: do scripts/1_compile.do
+  ./run.sh sv
+
+#### UVM
+
+  ./run.sh uvm
