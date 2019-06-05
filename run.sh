@@ -8,7 +8,7 @@ then
   {
     #run vsim
 
-    vsim -c -do ./scripts/3_simul.do
+    vsim -c -do ./scripts/sv/3_simul.do
 
     #save log file
     mv transcript simulation.log
@@ -22,6 +22,8 @@ then
 elif [ "$1" = "uvm" ]
 then
 
+  echo "	simulating... please wait"
+  
   #run sim
   vsim -c -do scripts/uvm/1_compile.do
 
