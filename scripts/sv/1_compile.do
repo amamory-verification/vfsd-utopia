@@ -18,6 +18,6 @@ vlog -work work -sv +incdir+./src/tb/sv +incdir+./src/dut ./src/dut/utopia1_atm_
 vlog -work work -sv +incdir+./src/tb/sv +incdir+./src/dut ./src/dut/utopia1_atm_tx.sv  
 vlog -work work -sv +incdir+./src/tb/sv +incdir+./src/dut ./src/dut/squat.sv 
 vlog -work work -sv +incdir+./src/tb/sv +incdir+./src/dut ./src/tb/sv/test.sv
-vlog -work work -sv +incdir+./src/tb/sv +incdir+./src/dut ./src/dut/top.sv 
+vlog -work work -sv +incdir+./src/tb/sv +incdir+./src/dut ./src/dut/top_sv.sv 
 
 vsim work.top

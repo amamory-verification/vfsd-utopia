@@ -3,7 +3,7 @@
 if [ "$1" = "sv" ]
 then
 
-  module load modelsim
+  # module load modelsim
   echo "	simulating... please wait"
   {
     #run vsim
@@ -17,21 +17,26 @@ then
     rm -rf *.ini transcript *.wlf work ./src/*~
 
   } > /dev/null
-  module unload modelsim
+  # module unload modelsim
 
 elif [ "$1" = "uvm" ]
 then
 
+  # module load modelsim
   echo "	simulating... please wait"
+  {
 
-  #run sim
-  vsim -c -do scripts/uvm/1_compile.do
+    #run sim
+    vsim -c -do scripts/uvm/1_compile.do
 
-  #save log file
-  mv transcript simulation.log
+    #save log file
+    mv transcript simulation.log
 
-  #cleanup
-  rm -rf dump.vcd teste* transcript utopia.ucdb  vsim.wlf work *.ini
+    #cleanup
+    rm -rf dump.vcd teste* transcript utopia.ucdb  vsim.wlf work *.ini
+
+  } > /dev/null
+  # module load modelsim
 
 else
 

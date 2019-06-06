@@ -20,7 +20,7 @@ vlog -work work -novopt -sv +incdir+./src/tb/uvm +incdir+./src/dut +incdir+./src
 vlog -work work -novopt -sv +incdir+./src/tb/uvm +incdir+./src/dut +incdir+./src/tb/uvm  ./src/tb/uvm/teste_parallel.sv
 vlog -work work -novopt -sv +incdir+./src/tb/uvm +incdir+./src/dut +incdir+./src/tb/uvm  ./src/tb/uvm/teste.sv
 
-vlog -work work -novopt -sv +incdir+./src/tb/uvm +incdir+./src/dut +incdir+./src/tb/uvm  ./src/dut/top.sv 
+vlog -work work -novopt -sv +incdir+./src/tb/uvm +incdir+./src/dut +incdir+./src/tb/uvm  ./src/dut/top_uvm.sv 
 
 #vsim work.top -coverage +UVM_PHASE_TRACE +UVM_OBJECTION_TRACE +UVM_VERBOSITY=UVM_MEDIUM +UVM_TESTNAME=teste 
 
@@ -49,3 +49,6 @@ coverage save teste_parallel.ucdb
 
 vcover merge  -out utopia.ucdb teste.ucdb teste_parallel.ucdb
 vcover report utopia.ucdb -cvg -details
+
+quit -sim
+quit -f
