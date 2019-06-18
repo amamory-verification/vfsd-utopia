@@ -1,5 +1,5 @@
 /**********************************************************************
- * Cell rewriting and forwarding configuration
+ * External typdefs included by most of the Utopia ATM model files
  *
  * To simulate this example with stimulus, invoke simulation on
  * 10.00.00_example_top.sv.  This top-level file includes all of the
@@ -40,12 +40,6 @@
  *   1.00 15 Dec 2003 -- original code, as included in book
  *   1.01 10 Jul 2004 -- cleaned up comments, added expected results
  *                       to output messages
- *   1.10 21 Jul 2004 -- corrected errata as printed in the book
- *                       "SystemVerilog for Design" (first edition) and
- *                       to bring the example into conformance with the
- *                       final Accellera SystemVerilog 3.1a standard
- *                       (for a description of changes, see the file
- *                       "errata_SV-Design-book_26-Jul-2004.txt")
  *
  * Caveat: Expected results displayed for this code example are based
  * on an interpretation of the SystemVerilog 3.1 standard by the code
@@ -64,35 +58,63 @@
  * USE OF THIS CODE.
  *********************************************************************/
 
-`ifndef LOOKUPTABLE__SV
-`define LOOKUPTABLE__SV 
+`ifndef _INCL_DEFINITIONS
+`define _INCL_DEFINITIONS
 
+`define TxPorts 4  // set number of transmit ports
+`define RxPorts 4  // set number of receive ports
 
-`include "definitions.sv"  // include external definitions
+parameter NumRx = 4;
+parameter NumTx = 4;
 
+/*
+  Cell Formats
+*/
+/* UNI Cell Format */
+typedef struct packed {
+  bit        [3:0]  GFC;
+  bit        [7:0]  VPI;
+  bit        [15:0] VCI;
+  bit               CLP;
+  bit        [2:0]  PT;
+  bit        [7:0]  HEC;
+  bit [0:47] [7:0]  Payload;
+} uniType;
 
-interface LookupTable;
-  parameter int  Asize  = 8;
-  parameter int  Arange = 1<<Asize;
-  parameter type dType  = bit;
+/* NNI Cell Format */
+typedef struct packed {
+  bit        [11:0] VPI;
+  bit        [15:0] VCI;
+  bit               CLP;
+  bit        [2:0]  PT;
+  bit        [7:0]  HEC;
+  bit [0:47] [7:0]  Payload;
+} nniType;
 
-  dType Mem [0:Arange-1];
+/* Test View Cell Format (Payload Section) */
+typedef struct packed {
+  bit [0:4]  [7:0] Header;
+  bit [0:3]  [7:0] PortID;
+  bit [0:3]  [7:0] CellID;
+  bit [0:39] [7:0] Padding;
+} tstType;
 
-  // Function to perform write
-  function void write (input [Asize-1:0] addr,
-                       input dType data );
-     Mem[addr] = data;
-     //$display("@%0t: lut.write Mem[%0x]=%0x", $time, addr, Mem[addr]);
-//     $write("======= lut.write Mem[%0x]=%0x", addr, Mem[addr]);    $display; 
-  endfunction
+/*
+  Union of UNI / NNI / Test View / ByteStream
+*/
+typedef union packed {
+  uniType uni;
+  nniType nni;
+  tstType tst;
+  bit [0:52] [7:0] Mem;
+} ATMCellType;
 
-  // Function to perform read
-  function dType read (input bit [Asize-1:0] addr);
-//     $display("@%0t: lut.read Mem[%0x]=%0x", $time, addr, Mem[addr]);     
-//     $write("-------------- ======= lut.read Mem[%0x]=%0x", addr, Mem[addr]);    $display; 
-     return (Mem[addr]);
-  endfunction
-endinterface
+/*
+  Cell Rewriting and Forwarding Configuration
+*/
+typedef struct packed {
+  bit [`TxPorts-1:0] FWD;
+  bit [11:0] VPI;
+} CellCfgType;
 
-
-`endif // LOOKUPTABLE__SV
+`endif // _INCL_DEFINITIONS

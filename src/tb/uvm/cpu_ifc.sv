@@ -64,35 +64,32 @@
  * USE OF THIS CODE.
  *********************************************************************/
 
-`ifndef LOOKUPTABLE__SV
-`define LOOKUPTABLE__SV 
+`ifndef CPU_IFC__SV
+`define CPU_IFC__SV 
 
 
 `include "definitions.sv"  // include external definitions
 
+interface cpu_ifc;
+  logic        BusMode;
+  logic [11:0] Addr;
+  logic        Sel;
+  CellCfgType  DataIn;
+  CellCfgType  DataOut;
+  logic        Rd_DS;
+  logic        Wr_RW;
+  logic        Rdy_Dtack;
 
-interface LookupTable;
-  parameter int  Asize  = 8;
-  parameter int  Arange = 1<<Asize;
-  parameter type dType  = bit;
+  modport Peripheral (input  BusMode, Addr, Sel, DataIn, Rd_DS, Wr_RW,
+		      output DataOut, Rdy_Dtack);
 
-  dType Mem [0:Arange-1];
+  modport Test (output BusMode, Addr, Sel, DataIn, Rd_DS, Wr_RW,
+		input  DataOut, Rdy_Dtack);
 
-  // Function to perform write
-  function void write (input [Asize-1:0] addr,
-                       input dType data );
-     Mem[addr] = data;
-     //$display("@%0t: lut.write Mem[%0x]=%0x", $time, addr, Mem[addr]);
-//     $write("======= lut.write Mem[%0x]=%0x", addr, Mem[addr]);    $display; 
-  endfunction
+endinterface : cpu_ifc
 
-  // Function to perform read
-  function dType read (input bit [Asize-1:0] addr);
-//     $display("@%0t: lut.read Mem[%0x]=%0x", $time, addr, Mem[addr]);     
-//     $write("-------------- ======= lut.read Mem[%0x]=%0x", addr, Mem[addr]);    $display; 
-     return (Mem[addr]);
-  endfunction
-endinterface
+typedef virtual cpu_ifc vCPU;
+typedef virtual cpu_ifc.Test vCPU_T;
 
 
-`endif // LOOKUPTABLE__SV
+`endif // CPU_IFC__SV
